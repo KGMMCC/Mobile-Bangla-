@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional AI Text Editor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app">
+        <!-- Header -->
+        <header class="header glass-effect">
+            <div class="logo">
+                <span class="logo-icon">✎</span>
+                <h1>AI Text Editor Pro</h1>
+            </div>
+            <div class="header-actions">
+                <button class="btn-icon" id="settingsBtn">
+                    <span class="icon">⚙️</span>
+                </button>
+                <button class="btn-icon" id="helpBtn">
+                    <span class="icon">?</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- Main Container -->
+        <div class="main-container">
+            <!-- Sidebar -->
+            <aside class="sidebar glass-effect">
+                <div class="sidebar-section">
+                    <h3>টুলস</h3>
+                    <button class="btn-sidebar active" id="uploadBtn">
+                        <span class="icon">📤</span>
+                        <span>ছবি আপলোড</span>
+                    </button>
+                    <button class="btn-sidebar" id="autoEnhanceBtn">
+                        <span class="icon">✨</span>
+                        <span>অটো এনহ্যান্স</span>
+                    </button>
+                    <button class="btn-sidebar" id="batchEditBtn">
+                        <span class="icon">📝</span>
+                        <span>ব্যাচ এডিট</span>
+                    </button>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>টেক্সট স্টাইল</h3>
+                    <div class="style-controls">
+                        <select id="fontSelect" class="style-select">
+                            <option value="Arial">Arial (Sans)</option>
+                            <option value="Times New Roman">Times (Serif)</option>
+                            <option value="Courier New">Courier (Mono)</option>
+                            <option value="Hind Siliguri">হিন্দ সিলিগুড়ি</option>
+                            <option value="Noto Sans Bengali">নোটো বাংলা</option>
+                        </select>
+                        
+                        <div class="color-picker-container">
+                            <input type="color" id="colorPicker" value="#000000">
+                            <label for="colorPicker">রং</label>
+                        </div>
+                        
+                        <div class="size-control">
+                            <input type="range" id="fontSize" min="8" max="200" value="32">
+                            <span id="fontSizeValue">32px</span>
+                        </div>
+                        
+                        <div class="effect-controls">
+                            <button class="btn-effect" id="boldBtn">B</button>
+                            <button class="btn-effect" id="italicBtn">I</button>
+                            <button class="btn-effect" id="underlineBtn">U</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>ডিটেক্টেড টেক্সট</h3>
+                    <div id="textList" class="text-list"></div>
+                </div>
+
+                <div class="sidebar-section">
+                    <button class="btn-primary" id="downloadBtn">
+                        <span class="icon">⬇️</span>
+                        <span>ডাউনলোড</span>
+                    </button>
+                </div>
+            </aside>
+
+            <!-- Main Content -->
+            <main class="content">
+                <div class="canvas-container glass-effect">
+                    <canvas id="canvas"></canvas>
+                    
+                    <!-- Upload Overlay -->
+                    <div id="uploadOverlay" class="upload-overlay">
+                        <div class="upload-content">
+                            <span class="upload-icon">📸</span>
+                            <h3>ছবি আপলোড করুন</h3>
+                            <p>অথবা ড্র্যাগ ও ড্রপ করুন</p>
+                            <input type="file" id="fileInput" accept="image/*" hidden>
+                            <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                                ব্রাউজ করুন
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Loading Overlay -->
+                    <div id="loadingOverlay" class="loading-overlay hidden">
+                        <div class="spinner"></div>
+                        <p>AI প্রসেসিং হচ্ছে...</p>
+                    </div>
+                    
+                    <!-- Edit Panel -->
+                    <div id="editPanel" class="edit-panel hidden">
+                        <div class="edit-panel-header">
+                            <h4>টেক্সট এডিট করুন</h4>
+                            <button class="btn-close" id="closeEditPanel">×</button>
+                        </div>
+                        <textarea id="editText" class="edit-textarea" placeholder="নতুন টেক্সট লিখুন..."></textarea>
+                        <div class="edit-actions">
+                            <button class="btn-secondary" id="cancelEdit">বাতিল</button>
+                            <button class="btn-primary" id="saveEdit">সংরক্ষণ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Timeline / History -->
+                <div class="timeline glass-effect">
+                    <button class="timeline-btn" id="undoBtn" disabled>
+                        <span class="icon">↩️</span>
+                        <span>Undo</span>
+                    </button>
+                    <button class="timeline-btn" id="redoBtn" disabled>
+                        <span class="icon">↪️</span>
+                        <span>Redo</span>
+                    </button>
+                    <div class="timeline-slider">
+                        <input type="range" id="historySlider" min="0" max="100" value="0">
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Notification Toast -->
+        <div id="toast" class="toast hidden"></div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.3.0/fabric.min.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
